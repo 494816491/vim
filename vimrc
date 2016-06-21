@@ -1,7 +1,29 @@
 set nu
+set completeopt=menu
 map zq "+y
+"ctags 自动更新
+map <C-Q> <C-X><C-O>
+function! UpdateCtags()
+    let curdir=getcwd()
+    while !filereadable("./tags")
+        cd ..
+        if getcwd() == "/"
+            break
+        endif
+    endwhile
+    if filewritable("./tags")
+        !ctags -R
+        TlistUpdate
+    endif
+    execute ":cd " . curdir
+endfunction
+"autocmd BufWritePost *.h,*.cpp call UpdateCtags()
+"!ctags -R "--file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q
+
+
 "set fileencoding=gb18030 
-set fileencodings=utf-8,gb18030,utf-16,big5
+"set fileencodings=utf-8,gb18030,utf-16,big5
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set ts=4
 set shiftwidth=4
 "set autoindent
@@ -54,23 +76,28 @@ nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$ <CR> :cw<CR>
 nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR> <CR> :cw<CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,f- 
 if has('python')
-	py << EOF
-import sys,os,vim
-open_file_name = vim.buffers[1].name
-open_file_path = open_file_name
+py << EOF
 
-find_cs_file = False
-while find_cs_file == False:
-	open_file_path = os.path.split(open_file_path)[0]
-	if(open_file_path == '/'):
-		break
-	for file in os.listdir(open_file_path):
-		if file == "cscope.out":
-			find_cs_file = True
+import sys,os,vim
+if not vim.buffers[1].name:
+	pass
+else:
+	open_file_name = vim.buffers[1].name
+	#print open_file_name
+	open_file_path = open_file_name
+
+	find_cs_file = False
+	while find_cs_file == False:
+		open_file_path = os.path.split(open_file_path)[0]
+		if(open_file_path == '/'):
 			break
-if find_cs_file == True:
-	print "find cscope file:%s/cscope.out"%open_file_path
-	vim.command("cs add %s %s"%(open_file_path, open_file_path))
+		for file in os.listdir(open_file_path):
+			if file == "cscope.out":
+				find_cs_file = True
+				break
+		if find_cs_file == True:
+			print "find cscope file:%s/cscope.out"%open_file_path
+			vim.command("cs add %s %s"%(open_file_path, open_file_path))
 EOF
 endif
 
