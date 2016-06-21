@@ -80,24 +80,26 @@ py << EOF
 
 import sys,os,vim
 if not vim.buffers[1].name:
-	pass
+	open_file_path = os.getcwd()
 else:
 	open_file_name = vim.buffers[1].name
 	#print open_file_name
 	open_file_path = open_file_name
+	open_file_path = os.path.split(open_file_path)[0]
 
-	find_cs_file = False
-	while find_cs_file == False:
-		open_file_path = os.path.split(open_file_path)[0]
-		if(open_file_path == '/'):
+find_cs_file = False
+while find_cs_file == False:
+	for file in os.listdir(open_file_path):
+		if file == "cscope.out":
+			find_cs_file = True
 			break
-		for file in os.listdir(open_file_path):
-			if file == "cscope.out":
-				find_cs_file = True
-				break
-		if find_cs_file == True:
-			print "find cscope file:%s/cscope.out"%open_file_path
-			vim.command("cs add %s %s"%(open_file_path, open_file_path))
+	if find_cs_file == True:
+		print "find cscope file:%s/cscope.out"%open_file_path
+		vim.command("cs add %s %s"%(open_file_path, open_file_path))
+		break
+	if(open_file_path == '/'):
+		break
+	open_file_path = os.path.split(open_file_path)[0]
 EOF
 endif
 
