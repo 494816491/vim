@@ -1,5 +1,4 @@
 set nu
-set completeopt=menu
 map zq "+y
 "ctags 自动更新
 map <C-Q> <C-X><C-O>
@@ -77,7 +76,6 @@ nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR> <CR> :cw<CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,f- 
 if has('python')
 py << EOF
-
 import sys,os,vim
 if not vim.buffers[1].name:
 	open_file_path = os.getcwd()
@@ -86,7 +84,6 @@ else:
 	#print open_file_name
 	open_file_path = open_file_name
 	open_file_path = os.path.split(open_file_path)[0]
-
 find_cs_file = False
 while find_cs_file == False:
 	for file in os.listdir(open_file_path):
@@ -96,6 +93,27 @@ while find_cs_file == False:
 	if find_cs_file == True:
 		print "find cscope file:%s/cscope.out"%open_file_path
 		vim.command("cs add %s %s"%(open_file_path, open_file_path))
+		break
+	if(open_file_path == '/'):
+		break
+	open_file_path = os.path.split(open_file_path)[0]
+	#ctags
+if not vim.buffers[1].name:
+	open_file_path = os.getcwd()
+else:
+	open_file_name = vim.buffers[1].name
+	#print open_file_name
+	open_file_path = open_file_name
+	open_file_path = os.path.split(open_file_path)[0]
+find_cs_file = False
+while find_cs_file == False:
+	for file in os.listdir(open_file_path):
+		if file == "tags":
+			find_cs_file = True
+			break
+	if find_cs_file == True:
+		print "find tags file:%s/tags"%open_file_path
+		vim.command("set tags=%s/tags,tags<CR>"%open_file_path)
 		break
 	if(open_file_path == '/'):
 		break
@@ -116,3 +134,10 @@ call pathogen#infect()
 Helptags
 
 
+"complete
+set complete ".,w,b,u,t,i,]"
+"set completeopt 
+"set completeopt=longest,menu
+set completeopt=longest,menu
+
+"set completeopt=menu
