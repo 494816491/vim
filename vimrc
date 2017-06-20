@@ -21,8 +21,12 @@ endfunction
 
 
 "set fileencoding=gb18030 
-"set fileencodings=utf-8,gb18030,utf-16,big5
-set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set fileencodings=utf-8,gb18030,utf-16,big5
+"set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+"set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,gb18030,latin1
+"set fileencodings=utf-8
+
+
 set ts=4
 set shiftwidth=4
 "set autoindent
@@ -44,9 +48,10 @@ nmap <F9>1 :CtrlP /home/ln/Hi3520D_SDK_V1.0.2.2/<CR>
 let g:ctrlp_max_files = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_by_filename = 1
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_height = 20
-let g:ctrlp_lazy_update = 500
+let g:ctrlp_lazy_update = 700
+let g:ctrlp_root_markers = ['tags']
 
 "html tags % jump
 runtime macros/matchit.vim 
@@ -60,7 +65,7 @@ let g:miniBufExplorerMoreThanOne=0
 "cs add /home/lining/src-rt/cscope.out /home/lining/src-rt/
 nmap <F7>1 :set tags=/home/ln/hi3520d_050/tags,tags<CR>
 "nmap <F7>1 :cs add /home/ln/hi3520d_050/cscope.out /home/ln/hi3520d_050/<CR> :set tags=/home/ln/hi3520d_050/tags,tags<CR>
-set cst
+"set cst
 
 map g<C-]> :cs find c <C-R>=expand("<cword>")<CR><CR> :cw<CR>
 map g<C-\> :cs find s <C-R>=expand("<cword>")<CR><CR> :cw<CR>
@@ -74,8 +79,8 @@ nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR> <CR> :cw<CR>
 nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$ <CR> :cw<CR>
 nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR> <CR> :cw<CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,f- 
-if has('python')
-py << EOF
+if has('python3')
+py3 << EOF
 import sys,os,vim
 if not vim.buffers[1].name:
 	open_file_path = os.getcwd()
@@ -91,7 +96,7 @@ while find_cs_file == False:
 			find_cs_file = True
 			break
 	if find_cs_file == True:
-		print "find cscope file:%s/cscope.out"%open_file_path
+		print ("find cscope file:%s/cscope.out"%open_file_path)
 		vim.command("cs add %s %s"%(open_file_path, open_file_path))
 		break
 	if(open_file_path == '/'):
@@ -112,7 +117,7 @@ while find_cs_file == False:
 			find_cs_file = True
 			break
 	if find_cs_file == True:
-		print "find tags file:%s/tags"%open_file_path
+		print ("find tags file:%s/tags"%open_file_path)
 		vim.command("set tags=%s/tags,tags<CR>"%open_file_path)
 		break
 	if(open_file_path == '/'):
@@ -126,9 +131,10 @@ endif
 let Tlist_Show_One_File=1
 set path+=/home/lining/src-rt/**
 set autochdir
-set mouse=a
+"set mouse=a
 set hls
 map <F12> :Tlist<CR>
+
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 Helptags
