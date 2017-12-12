@@ -89,7 +89,9 @@ else:
 	#print open_file_name
 	open_file_path = open_file_name
 	open_file_path = os.path.split(open_file_path)[0]
+
 find_cs_file = False
+
 while find_cs_file == False:
 	for file in os.listdir(open_file_path):
 		if file == "cscope.out":
