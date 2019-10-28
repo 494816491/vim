@@ -1,5 +1,7 @@
 set nu
 map zq "+y
+"copy file full path name
+map zy :let @+ = expand("%:p")<CR>
 "ctags 自动更新
 map <C-Q> <C-X><C-O>
 function! UpdateCtags()
@@ -21,8 +23,9 @@ endfunction
 
 
 "set fileencoding=gb18030 
-set fileencodings=utf-8,gb18030,utf-16,big5
-"set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+"set fileencodings=utf-8,gb18030,utf-16,big5
+"set fileencodings=utf-8
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 "set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,gb18030,latin1
 "set fileencodings=utf-8
 
