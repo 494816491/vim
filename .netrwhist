@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/ln/m_script'
+let g:netrw_dirhist_2='/home/ln/tj_mount'
+let g:netrw_dirhist_3='/home/ln/sda1/ori_src/ti_rtos/ethfw/apps/app_remoteswitchcfg_server'
+let g:netrw_dirhist_4='/home/ln/sda1/ori_src/ti_rtos/ethfw/apps/app_remoteswitchcfg_server/mcu_2_0'
+let g:netrw_dirhist_5='/home/ln/sda1/8_2/rtos/ethfw/apps/app_remoteswitchcfg_client/mcu_2_1/j721e'
+let g:netrw_dirhist_6='/home/ln/sda1/8_2/rtos/pdk_jacinto_08_02_00_21/packages/ti/kernel/freertos'
+let g:netrw_dirhist_7='/home/ln/.config'

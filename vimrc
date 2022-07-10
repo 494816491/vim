@@ -29,6 +29,13 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 "set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,gb18030,latin1
 "set fileencodings=utf-8
 
+" 要安装的插件列表
+"call plug#begin('~/.vim/plugged')
+"" tab键补全功能插件
+""Plug 'ervandew/supertab'
+"" Coc 智能补全插件引擎
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"call plug#end()
 
 set ts=4
 set shiftwidth=4
